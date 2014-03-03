@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.itasa"
+       name="italiansubs.net"
+       version="0.0.1"
+       provider-name="phate89">
+  <requires>
+    <import addon="xbmc.python" version="2.4.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="it">ItaSA</summary>
+    <description lang="it">Trova e scarica sottotitoli da italiansubs.net</description>
+    <disclaimer lang="it"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source> 
+  </extension>
+</addon>
