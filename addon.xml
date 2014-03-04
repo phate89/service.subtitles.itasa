@@ -12,7 +12,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en">ItaSA subtitle addon</summary>
     <description lang="en">Find and download subtitles from italiansubs.net</description>
-    <disclaimer lang="en">Feel free to use this script. For information visit the wiki.</disclaimer>
+    <disclaimer lang="en">Feel free to use this script. For information visit the forum.</disclaimer>
     <summary lang="it">Addon sottotitoli ItaSA</summary>
     <description lang="it">Trova e scarica sottotitoli da italiansubs.net</description>
     <disclaimer lang="it">Sentitevi liberi di usare questo script. Per informazioni visitate il forum.</disclaimer>
