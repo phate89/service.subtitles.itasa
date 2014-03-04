@@ -5,6 +5,7 @@
        provider-name="phate89">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.simplejson" version="2.0.10"/>
   </requires>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
