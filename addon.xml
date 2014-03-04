@@ -15,8 +15,8 @@
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <forum>http://forum.xbmc.org/showthread.php?tid=188074</forum>
-    <website></website>
+    <website>http://www.italiansubs.net/forum/itasanews/xbmc-itasa-subtitle-downloader/</website>
     <email></email>
-    <source></source> 
+    <source>https://github.com/phate89/service.subtitles.itasa</source> 
   </extension>
 </addon>
