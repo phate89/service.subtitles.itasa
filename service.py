@@ -39,7 +39,7 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode('utf-8')
 sys.path.append(__resource__)
 
 def log(module, msg):
-	xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level = xbmc.LOGDEBUG)
+	xbmc.log((u'### [' + module + u'] - ' + msg).encode('utf-8'), level = xbmc.LOGDEBUG)
 
 def normalizeString(str):
 	return unicodedata.normalize(
@@ -49,10 +49,9 @@ def normalizeString(str):
 def getOnlineID():
 	json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["tvshowid","imdbnumber"]},"id":1}' )
 	json_player_getitem = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
-	if json_player_getitem.has_key('result') and json_player_getitem['result'].has_key('item') and json_player_getitem['result']['item'].has_key('id') and json_player_getitem['result']['item'].has_key('type'):
-		if json_player_getitem['result']['item']['type'] == 'movie' and json_player_getitem['result']['item'].has_key('imdbnumber') and json_player_getitem['result']['item']['imdbnumber']!='':
-			return json_player_getitem['result']['item']['imdbnumber']
-		elif json_player_getitem['result']['item']['type'] == 'episode':
+	#if json_player_getitem['result']['item']['type'] == 'movie' and json_player_getitem['result']['item'].has_key('imdbnumber') and json_player_getitem['result']['item']['imdbnumber']!='':
+		#	return json_player_getitem['result']['item']['imdbnumber']
+	if json_player_getitem.has_key('result') and json_player_getitem['result'].has_key('item') and json_player_getitem['result']['item'].has_key('id') and json_player_getitem['result']['item'].has_key('type') and json_player_getitem['result']['item']['type'] == 'episode':
 			json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":1,"method":"VideoLibrary.GetTVShowDetails","params":{"tvshowid":%s, "properties": ["imdbnumber"]}}' % (json_player_getitem['result']['item']['tvshowid']) )
 			json_getepisodedetails = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
 			if json_getepisodedetails.has_key('result') and json_getepisodedetails['result'].has_key('tvshowdetails') and json_getepisodedetails['result']['tvshowdetails'].has_key('imdbnumber') and json_getepisodedetails['result']['tvshowdetails'].has_key('imdbnumber') and json_getepisodedetails['result']['tvshowdetails']['imdbnumber']!='':
@@ -77,13 +76,13 @@ def get_params():
 	return param
 
 def geturl(url):
-	log( __name__ , " Getting url: %s" % (url))
+	log( __name__ , "Getting url: %s" % (url))
 	try:
 		headers = { 'User-Agent' : 'XBMC Subtitle downloader' }
 		req = urllib2.Request(url, None, headers)
 		content = urllib2.urlopen(req).read()
 	except:
-		log( __name__ , " Failed to get url:%s" % (url))
+		log( __name__ , "Failed to get url:%s" % (url))
 		content = None
 	return(content)
 
@@ -101,12 +100,11 @@ def openSerie():
 		try:
 			fh = open(__serieprofilepath__, 'r')
 			contents = simplejson.loads(unicode(fh.read(), errors='ignore'))
-			fh.close()
 		except:
 			log(__name__, "Unable to open file: %s" % __serieprofilepath__)
 			return contents
 		if xbmcvfs.exists(__serieoriginalpath__) and os.path.getctime(__serieprofilepath__) < os.path.getctime(__serieoriginalpath__):		
-			log(__name__, 'Check if the new Serie.json has new tv shows.')
+			log(__name__, 'Check if the new Serie.json has new tv shows')
 			contents2 = None
 			try:
 				fh = open(__serieoriginalpath__, 'r')
@@ -135,15 +133,15 @@ def openSerie():
 			log(__name__, "Unable to open file: %s" % __serieoriginalpath__)
 			return contents
 	else:			
-		log(__name__, 'No file in both serie.json locations.')
+		log(__name__, 'No file in both serie.json locations')
 		return None
 
 def prepare_search_string(s):
-	se = re.sub(r'(( ((\(\d\d\d\d\))|((\([a-zA-Z]{2,3})\))))|(((\(\d\d\d\d\))|((\([a-zA-Z]{2,3})\)))))*$', '',s)	# remove year or country from title
+	se = re.sub(r'(( ((\(\d\d\d\d\))|((\([a-zA-Z]{2,3})\))))|(((\(\d\d\d\d\))|((\([a-zA-Z]{2,3})\)))))*$', '', s)	# remove year or country from title
 	return s
 
 def getItaSATheTVDBID(tvshowid):
-	log(__name__,'Obtaining TheTVDB ID of itasa tv show.')
+	log(__name__,'Obtaining TheTVDB ID of itasa tv show')
 	content = geturl('https://api.italiansubs.net/api/rest/shows/' + tvshowid + '?apikey=4ffc34b31af2bca207b7256483e24aac')
 	match = re.findall(r'<id_tvdb>([\s\S]*?)</id_tvdb>', content, re.IGNORECASE | re.DOTALL)
 	if match:
@@ -158,10 +156,10 @@ def getItaSATVShowList():
 		if result:
 			return None
 		else:
-			log(__name__,'Match of tv shows failed.')
+			log(__name__,'Match of tv shows failed')
 			return None
 	else:
-		log(__name__,'Download of tv show list failed.')
+		log(__name__,'Download of tv show list failed')
 		return None
 
 def getItaSATVShowID(tvshow, onlineid):
@@ -174,7 +172,7 @@ def getItaSATVShowID(tvshow, onlineid):
 			if onlineid in series:
 				return series[onlineid]
 			else:
-				log(__name__,'Download tv show list and search for new tv shows.')
+				log(__name__,'Download tv show list and search for new tv shows')
 				missingseries = {}
 				content = getItaSATVShowList()
 				if content:
@@ -188,7 +186,7 @@ def getItaSATVShowID(tvshow, onlineid):
 					saveSerie(series)
 					if onlineid in missingseries:
 						return missingseries[onlineid]
-					log(__name__,'TheTVDB ID not found in itasa. Searching by TV show name.')
+					log(__name__,'TheTVDB ID not found in itasa. Searching by TV show name')
 				else:
 					return None
 		HTTPResponse = urllib2.urlopen('http://www.thetvdb.com/data/series/'+onlineid+'/').read()
@@ -204,7 +202,7 @@ def getItaSATVShowID(tvshow, onlineid):
 	for (tvshowid, tvshowname) in result:
 		if seriesclean == tvshowname.lower():
 			return tvshowid
-	log(__name__,'Searching by full TV show name failed. Trying with year and nation removed.')
+	log(__name__,'Searching by full TV show name failed. Trying with year and nation removed')
 	seriesclean = prepare_search_string(seriesname)
 	d = []
 	for (tvshowid, tvshowname) in result:
@@ -234,7 +232,7 @@ def login(username, password):
 				my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 				my_opener.addheaders = [('Referer', main_url)]
 				urllib2.install_opener(my_opener)
-				request = urllib2.Request(main_url + 'index.php',login_postdata)
+				request = urllib2.Request(main_url + 'index.php', login_postdata)
 				response = urllib2.urlopen(request).read()
 				match = re.search('logouticon.png', response, re.IGNORECASE | re.DOTALL)
 				if match:
@@ -256,7 +254,7 @@ def append_subtitle(subid, subtitlename, filename, sync):
 	## anything after "action=download&" will be sent to addon once user clicks listed subtitle to downlaod
 	url = "plugin://%s/?action=download&subid=%s&filename=%s" % (__scriptid__, subid, filename)
 	## add it to list, this can be done as many times as needed for all subtitles found
-	log(__name__,"Adding subtitle %s to gui list" % subtitlename)
+	log(__name__,"Adding subtitle '%s' to gui list" % subtitlename)
 	xbmcplugin.addDirectoryItem(handle = int(sys.argv[1]), url = url, listitem = listitem, isFolder = False)
 
 def search(item):
@@ -269,15 +267,15 @@ def search(item):
 		elif item['tvshow']:
 			search_tvshow(item['tvshow'], item['season'], item['episode'], item['onlineid'], filename)
 		elif item['title'] and item['year']:
-			log(__name__, 'Itasa only works with tv shows. Skipped.')
+			log(__name__, 'Itasa only works with tv shows. Skipped')
 		else:
 			search_filename(filename)
 	else:
-		log(__name__, 'Itasa only works with italian. Skipped.')
+		log(__name__, 'Itasa only works with italian. Skipped')
 	
 def search_tvshow(tvshow, season, episode, onlineid, filename):
-	log(__name__, "Search tvshow %s" % tvshow)
-	itasaid = getItaSATVShowID(tvshow,onlineid)
+	log(__name__, "Search tv show '%s'" % tvshow)
+	itasaid = getItaSATVShowID(tvshow, onlineid)
 	if itasaid:
 		log(__name__,"Found itasa id %s" % itasaid)
 		content = geturl('https://api.italiansubs.net/api/rest/subtitles/search?q=%sx%s&show_id=%s&apikey=4ffc34b31af2bca207b7256483e24aac' % (season, episode, itasaid))
@@ -354,10 +352,10 @@ def download (subid): #standard input
 		if content:
 			match = re.search('<a href="http://www\.italiansubs\.net/(index\.php\?option=com_remository&amp;Itemid=\d+?&amp;func=download&amp;id=%s&amp;chk=[^\n\r\t ]+?&amp;no_html=1")' % subid, content, re.IGNORECASE | re.DOTALL)
 			if match:
-				log( __name__ ," Fetching subtitles using url %s" % (main_url + match.group(1)))
+				log( __name__ ,"Fetching subtitles using url %s" % (main_url + match.group(1)))
 				content= geturl(main_url + match.group(1))
 				if content:
-					log(__name__, 'Found download url.')
+					log(__name__, 'Found download url')
 					try:
 						if xbmcvfs.exists(__temp__):
 							shutil.rmtree(__temp__)
@@ -397,11 +395,11 @@ def download (subid): #standard input
 						log(__name__, "Failed to save subtitle to %s" % local_tmp_file)
 					if packed:
 						xbmc.sleep(500)
-						xbmc.executebuiltin('XBMC.Extract(' + local_tmp_file + ',' + __temp__ +')', True)
+						xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + __temp__ +')').encode('utf-8'), True)
 						files = []
 						exts = ['.srt', '.sub', '.txt', '.smi', '.ssa', '.ass']
 						tag = True
-						log(__name__, 'Check if file contains tags in srt and if not returns it.')
+						log(__name__, 'Check if file contains tags in srt and if not returns it')
 						for file in os.listdir(__temp__):
 							if '.tag.' not in file.lower() and os.path.splitext(file)[1] in exts:
 								files.append(os.path.join(__temp__, file))
@@ -418,19 +416,20 @@ def download (subid): #standard input
 					else:
 						return [local_tmp_file]
 				else:
-					log( __name__ ,'Failed to download the file.')
+					log( __name__ ,'Failed to download the file')
 			else:
 				match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
 				if match:
-					log( __name__ ,'Can\'t find the download url. Probably you downloaded the file too many times (more than 10).')
+					log( __name__ ,'Can\'t find the download url. Probably you downloaded the file too many times (more than 10)')
 				else:
-					log( __name__ ,'Can\'t find the download url. Probably not logged in.')
+					log( __name__ ,'Can\'t find the download url. Probably not logged in')
 		else:
-			log( __name__ ,'Download of subtitle page failed.')
+			log( __name__ ,'Download of subtitle page failed')
 	else:
-		log( __name__ ,'Login to Itasa failed. Check your username/password at the addon configuration.')
+		log( __name__ ,'Login to Itasa failed. Check your username/password at the addon configuration')
 	return []
 
+log(__name__, "Application version: %s" % __version__)
 params = get_params()
 
 if params['action'] == 'search' or params['action'] == 'manualsearch':
