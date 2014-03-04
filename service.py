@@ -32,7 +32,7 @@ main_url = 'http://www.italiansubs.net/'
 __cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode('utf-8')
 __serieoriginalpath__ = os.path.join(__cwd__, 'resources', 'Serie.json')
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8')
-__serieprofilepath__ = os.path.join(__profile__, __scriptid__, 'Serie.json')
+__serieprofilepath__ = os.path.join(__profile__, 'Serie.json')
 __resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode('utf-8')
 __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode('utf-8')
 
@@ -430,9 +430,12 @@ def download (subid): #standard input
 	return []
 
 log(__name__, "Application version: %s" % __version__)
+if not xbmcvfs.exists(__profile__):
+	xbmcvfs.mkdirs(__profile__)
 params = get_params()
 
 if params['action'] == 'search' or params['action'] == 'manualsearch':
+	log(__name__,__serieprofilepath__)
 	item = {}
 	item['temp'] = False
 	item['rar'] = False
