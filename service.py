@@ -78,7 +78,7 @@ def get_params():
 def geturl(url):
 	log( __name__ , "Getting url: %s" % (url))
 	try:
-		headers = { 'User-Agent' : 'XBMC Subtitle downloader' }
+		headers = { 'User-Agent' : 'XBMC ItaSA Subtitle downloader' }
 		req = urllib2.Request(url, None, headers)
 		content = urllib2.urlopen(req).read()
 	except:

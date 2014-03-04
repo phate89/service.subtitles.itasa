@@ -3,4 +3,6 @@ service.subtitles.itasa
 
 italiansubs.net subtitle service plugin for XBMC
 
-Forum thread: https://github.com/phate89/service.subtitles.itasa
+Forum threads: 
+http://forum.xbmc.org/showthread.php?tid=188074
+http://www.italiansubs.net/forum/itasanews/xbmc-itasa-subtitle-downloader/
