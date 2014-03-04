@@ -10,9 +10,12 @@
   <extension point="xbmc.subtitle.module"
              library="service.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="it">ItaSA</summary>
+    <summary lang="en">ItaSA subtitle addon</summary>
+    <description lang="en">Find and download subtitles from italiansubs.net</description>
+    <disclaimer lang="en">Feel free to use this script. For information visit the wiki.</disclaimer>
+    <summary lang="it">Addon sottotitoli ItaSA</summary>
     <description lang="it">Trova e scarica sottotitoli da italiansubs.net</description>
-    <disclaimer lang="it"></disclaimer>
+    <disclaimer lang="it">Sentitevi liberi di usare questo script. Per informazioni visitate il forum.</disclaimer>
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <forum>http://forum.xbmc.org/showthread.php?tid=188074</forum>
