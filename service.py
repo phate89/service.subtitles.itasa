@@ -312,13 +312,19 @@ def checksyncandadd(result, filename):
 	fl = filename.lower()
 	for (subtitleid, subtitlename, subtitleversion) in result:
 		if subtitleversion == '720p':						
-			if '720p' in fl and 'hdtv' in fl:
+			if ('720p' in fl) and ('hdtv' in fl):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+		elif subtitleversion == 'Normale':
+			if ('hdtv' in fl) and ( not ('hdtv' in fl)):
 				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
 		elif subtitleversion.lower() in fl:
 			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
 	for (subtitleid, subtitlename, subtitleversion) in result:
 		if subtitleversion == '720p':
-			if not('720p' in fl and 'hdtv') in fl:
+			if not (('720p' in fl) and ('hdtv' in fl)):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+		elif subtitleversion == 'Normale':
+			if not (('hdtv' in fl) and ( not ('hdtv' in fl))):
 				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
 		elif not (subtitleversion.lower() in fl):
 			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)

@@ -1,2 +1,5 @@
+0.0.2
+- fixed a bug with a sync check and added the check for the normal (hdtv) version
+
 0.0.1
 - initial release
