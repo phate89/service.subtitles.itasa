@@ -313,7 +313,10 @@ def search_manual(searchstr, filename):
 def checksyncandadd(result, filename):
 	fl = filename.lower()
 	for (subtitleid, subtitlename, subtitleversion) in result:
-		if subtitleversion == '720p':						
+		if subtitleversion == 'WEB-DL':						
+			if ('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+		elif subtitleversion == '720p':						
 			if ('720p' in fl) and ('hdtv' in fl):
 				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
 		elif subtitleversion == 'Normale':
@@ -322,7 +325,10 @@ def checksyncandadd(result, filename):
 		elif subtitleversion.lower() in fl:
 			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
 	for (subtitleid, subtitlename, subtitleversion) in result:
-		if subtitleversion == '720p':
+		if subtitleversion == 'WEB-DL':						
+			if not (('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl)):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+		elif subtitleversion == '720p':
 			if not (('720p' in fl) and ('hdtv' in fl)):
 				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
 		elif subtitleversion == 'Normale':
