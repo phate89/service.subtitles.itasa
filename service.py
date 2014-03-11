@@ -267,10 +267,12 @@ def search(item):
 		elif item['tvshow']:
 			search_tvshow(item['tvshow'], item['season'], item['episode'], item['onlineid'], filename)
 		elif item['title'] and item['year']:
+			xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32006))).encode('utf-8'))
 			log(__name__, 'Itasa only works with tv shows. Skipped')
 		else:
 			search_filename(filename)
 	else:
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
 		log(__name__, 'Itasa only works with italian. Skipped')
 	
 def search_tvshow(tvshow, season, episode, onlineid, filename):
@@ -426,12 +428,14 @@ def download (subid): #standard input
 			else:
 				match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
 				if match:
+					xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32007))).encode('utf-8'))
 					log( __name__ ,'Can\'t find the download url. Probably you downloaded the file too many times (more than 10)')
 				else:
 					log( __name__ ,'Can\'t find the download url. Probably not logged in')
 		else:
 			log( __name__ ,'Download of subtitle page failed')
 	else:
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32004))).encode('utf-8'))
 		log( __name__ ,'Login to Itasa failed. Check your username/password at the addon configuration')
 	return []
 
