@@ -154,7 +154,7 @@ def getItaSATVShowList():
 	if content:
 		result = re.findall(r'<id>([\s\S]*?)</id>[\s\S]*?<name>([\s\S]*?)</name>', content, re.IGNORECASE | re.DOTALL)
 		if result:
-			return None
+			return result
 		else:
 			log(__name__,'Match of tv shows failed')
 			return None
