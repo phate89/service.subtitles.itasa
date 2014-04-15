@@ -267,7 +267,7 @@ def getAuthID():
 		log( __name__ ,'Error loading itasa page. Login to Itasa failed')
 		return ''
 
-def append_subtitle(subid, subtitlename, filename, sync):
+def append_subtitle(subid, subtitlename, filename, sync, count):
 	listitem = xbmcgui.ListItem(label='Italian',
 								label2=subtitlename,
 								thumbnailImage='it')
@@ -277,7 +277,7 @@ def append_subtitle(subid, subtitlename, filename, sync):
 
 	## below arguments are optional, it can be used to pass any info needed in download function
 	## anything after "action=download&" will be sent to addon once user clicks listed subtitle to downlaod
-	url = "plugin://%s/?action=download&subid=%s&filename=%s" % (__scriptid__, subid, filename)
+	url = "plugin://%s/?action=download&count=%s&subid=%s&filename=%s" % (__scriptid__, count, subid, filename)
 	## add it to list, this can be done as many times as needed for all subtitles found
 	log(__name__,"Adding subtitle '%s' to gui list" % subtitlename)
 	xbmcplugin.addDirectoryItem(handle = int(sys.argv[1]), url = url, listitem = listitem, isFolder = False)
@@ -341,30 +341,33 @@ def search_manual(searchstr, filename):
 
 def checksyncandadd(result, filename):
 	fl = filename.lower()
+	count=0
 	for (subtitleid, subtitlename, subtitleversion) in result:
 		if subtitleversion == 'WEB-DL':						
 			if ('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
 		elif subtitleversion == '720p':						
 			if ('720p' in fl) and ('hdtv' in fl):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
 		elif subtitleversion == 'Normale':
 			if ('hdtv' in fl) and ( not ('720p' in fl)):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
 		elif subtitleversion.lower() in fl:
-			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
+		count +=1
 	for (subtitleid, subtitlename, subtitleversion) in result:
 		if subtitleversion == 'WEB-DL':						
 			if not (('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl)):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
 		elif subtitleversion == '720p':
 			if not (('720p' in fl) and ('hdtv' in fl)):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
 		elif subtitleversion == 'Normale':
 			if not (('hdtv' in fl) and ( not ('720p' in fl))):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
 		elif not (subtitleversion.lower() in fl):
-			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
+		count +=1
 
 def search_filename(filename, allowfallback):
 	log(__name__, 'Search tv show using the file name')
