@@ -84,7 +84,7 @@ def geturl(url):
 	except:
 		log( __name__ , "Failed to get url:%s" % (url))
 		content = None
-	return(content)
+	return content
 
 def saveSerie(contents):
 	try:
@@ -143,11 +143,13 @@ def prepare_search_string(s):
 def getItaSATheTVDBID(tvshowid):
 	log(__name__,'Obtaining TheTVDB ID of itasa tv show')
 	content = geturl('https://api.italiansubs.net/api/rest/shows/' + tvshowid + '?apikey=4ffc34b31af2bca207b7256483e24aac')
-	match = re.findall(r'<id_tvdb>([\s\S]*?)</id_tvdb>', content, re.IGNORECASE | re.DOTALL)
-	if match:
-		return match[0]
+	if content:
+		match = re.findall(r'<id_tvdb>([\s\S]*?)</id_tvdb>', content, re.IGNORECASE | re.DOTALL)
+		if match:
+			return match[0]
 	else:
-		return None
+		log(__name__,'Download of user page failed')
+	return None
 
 def getItaSATVShowList():
 	content = geturl('https://api.italiansubs.net/api/rest/shows?apikey=4ffc34b31af2bca207b7256483e24aac')
@@ -157,10 +159,9 @@ def getItaSATVShowList():
 			return result
 		else:
 			log(__name__,'Match of tv shows failed')
-			return None
 	else:
 		log(__name__,'Download of tv show list failed')
-		return None
+	return None
 
 def getItaSATVShowID(tvshow, onlineid):
 	seriesname = tvshow
@@ -228,17 +229,20 @@ def getAuthID():
 		authid = __addon__.getSetting( 'authid' )
 		if (authid =='' or oldusername != username):
 			content = geturl('https://api.italiansubs.net/api/rest/users/login?username=' + username + '&password=' + password + '&apikey=4ffc34b31af2bca207b7256483e24aac')
-			match = re.findall(r'<authcode>([\s\S]*?)</authcode>', content, re.IGNORECASE | re.DOTALL)
-			if match and match[0]!='':
-				authid=match[0]
-				__addon__.setSetting(id="ITLoggeduser", value=username)
-				__addon__.setSetting(id="authid", value=authid)
+			if content:
+				match = re.findall(r'<authcode>([\s\S]*?)</authcode>', content, re.IGNORECASE | re.DOTALL)
+				if match and match[0]!='':
+					authid=match[0]
+					__addon__.setSetting(id="ITLoggeduser", value=username)
+					__addon__.setSetting(id="authid", value=authid)
+				else:
+					xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
+					log( __name__ ,'Login to Itasa api failed. Check your username/password at the addon configuration')
+					return ''
 			else:
-				xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
-				log( __name__ ,'Login to Itasa api failed. Check your username/password at the addon configuration')
 				return ''
 	content= geturl(main_url + 'index.php')
-	if content is not None:
+	if content:
 		match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
 		if match:
 			return authid
