@@ -101,6 +101,7 @@ def openSerie():
 		try:
 			fh = open(__serieprofilepath__, 'r')
 			contents = simplejson.loads(unicode(fh.read(), errors='ignore'))
+			fh.close()
 		except:
 			log(__name__, "Unable to open file: %s" % __serieprofilepath__)
 			return contents
