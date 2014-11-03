@@ -450,6 +450,7 @@ def download (subid): #standard input
 				log("Saving to %s" % local_tmp_file)
 			except:
 				log("Failed to save subtitle to %s" % local_tmp_file)
+				return []
 			if packed:
 				xbmc.sleep(500)
 				xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + __temp__ +')').encode('utf-8'), True)
