@@ -1,3 +1,5 @@
+- add slash to folder path to prevent some fail
+
 1.0.1
 - added trick to rotate subtitles every download of the same subtitle (a workaround to a XBMC limit that doesn't support multiple subtitles)
 - added missing checks and fixed a typo

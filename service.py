@@ -35,7 +35,7 @@ __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-
 __serieprofilepath__ = os.path.join(__profile__, 'Serie.json')
 __lastdownload__ = os.path.join(__profile__, 'last.json')
 __resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode('utf-8')
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode('utf-8')
+__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp','')).decode('utf-8')
 
 sys.path.append(__resource__)
 
