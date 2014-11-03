@@ -540,13 +540,13 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
 	item['episode'] = str(xbmc.getInfoLabel('VideoPlayer.Episode')).zfill(2)					# Episode
 	item['tvshow'] = normalizeString(xbmc.getInfoLabel('VideoPlayer.TVshowtitle'))				# Show
 	item['title'] = normalizeString(xbmc.getInfoLabel('VideoPlayer.OriginalTitle'))				# try to get original title
-	item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))	# Full path
+	item['file_original_path'] = xbmc.Player().getPlayingFile().decode('utf-8')             	# Full path
 	item['onlineid'] = getOnlineID()															# Thetvdb id or imdb id
 	item['languages'] = []
 
 	if 'searchstring' in params:
 		item['mansearch'] = True
-		item['mansearchstr'] = params['searchstring']
+		item['mansearchstr'] = urllib.unquote(params['searchstring'])
 
 	for lang in urllib.unquote(params['languages']).decode('utf-8').split(','):
 		item['languages'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))

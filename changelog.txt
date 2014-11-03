@@ -1,3 +1,4 @@
+- fixed some possible problem with url quotes
 - if the download and renaming fails now the service stops working and doesn't continue
 - add slash to folder path to prevent some fail
 
