@@ -1,3 +1,4 @@
+1.0.2
 - updated thetvdb ids
 - added check to avoid running when there are no video playing
 - fixed some possible problem with url quotes
