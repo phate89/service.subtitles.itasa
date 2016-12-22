@@ -1,0 +1,53 @@
+# Kodi Media Center language file
+# Addon Name: italiansubs.net
+# Addon id: service.subtitles.itasa
+# Addon Provider: phate89
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: phate89\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Username"
+msgstr "Username"
+
+msgctxt "#32002"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "#32003"
+msgid "Login Details"
+msgstr "Login Details"
+
+msgctxt "#32004"
+msgid "Login to ItaSA failed. Check your username and password in addon settings"
+msgstr "Login to ItaSA failed. Check your username and password in addon settings"
+
+msgctxt "#32005"
+msgid "ItaSA has only italian subtitles. Add italian to the subtitle settings"
+msgstr "ItaSA has only italian subtitles. Add italian to the subtitle settings"
+
+msgctxt "#32006"
+msgid "Subtitle downloaded too many times"
+msgstr "Subtitle downloaded too many times"
+
+msgctxt "#32007"
+msgid "No video playing, exiting"
+msgstr "No video playing, exiting"
+
+msgctxt "#32008"
+msgid "Subtitle extraction failed, exiting"
+msgstr "Subtitle extraction failed, exiting"
+
+msgctxt "#32009"
+msgid "Subtitle download failed, exiting"
+msgstr "Subtitle download failed, exiting"
